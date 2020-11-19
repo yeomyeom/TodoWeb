@@ -54,7 +54,7 @@ public class TodoDao {
 			while(rs.next()) {
 				String dbTitle = rs.getString("title");
 				String dbName = rs.getString("name");
-				Integer dbSequence = rs.getInt("sequence");
+				int dbSequence = rs.getInt("sequence");
 				String dbType = rs.getString("type");
 				String dbDate = rs.getString("regdate");
 				todoList.add(new Todo(dbTitle, dbName, dbSequence, dbType, dbDate));
@@ -81,12 +81,17 @@ public class TodoDao {
 		return todoList;
 	}
 	//SELECT title, name, sequence, type, regdateFROM todo ORDER BY sequence;
-	public void insertTodo(String title, String name, int sequence) {
+	public static void insertTodo(Todo todo) {
+		
 		PreparedStatement ps = null;
 		String sql = "INSERT INTO todo (title, name, sqeunce) VALUES (?, ?, ?)";
 		try {
 			connectDB();
 			ps = connect.prepareStatement(sql);
+			ps.setString(1, todo.getTitle());
+			ps.setString(2, todo.getName());
+			ps.setInt(3, todo.getSequence());
+			ps.executeUpdate();
 			disconnectDB();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -99,5 +104,14 @@ public class TodoDao {
 				}
 			}
 		}
+	}
+	
+	public static void upgradeType(Todo todo) {
+		//TODO -> DOING -> DONE
+		
+	}
+	
+	public static void selectTodo(Todo todo) {
+		
 	}
 }
