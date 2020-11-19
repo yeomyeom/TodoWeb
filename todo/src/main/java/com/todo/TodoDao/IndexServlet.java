@@ -10,20 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.todo.TodoDto.Todo;
 
 /**
- * Servlet implementation class MainServlet
+ * Servlet implementation class IndexServlet
  */
-@WebServlet("/main")
-public class MainServlet extends HttpServlet {
+@WebServlet({ "/index", "/" })
+public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainServlet() {
+    public IndexServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +31,7 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.setCharacterEncoding("utf-8");
-		//response.setContentType("application/json");
+		// TODO Auto-generated method stub
 		ArrayList<Todo> todoList = new ArrayList<Todo>();
 		todoList = TodoDao.allTodoList(); 
 		request.setAttribute("todoList", todoList);
@@ -45,6 +43,7 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

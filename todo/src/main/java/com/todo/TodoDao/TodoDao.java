@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import com.todo.TodoDto.Todo;
 
 public class TodoDao {
-	private static String dburl = "jdbc:mysql://localhost:3306/Todo";
+	private static String dburl = "jdbc:mysql://localhost:3306/Todo?&useSSL=false";
 	private static String dbUser = "Todo";
 	private static String dbPass = "todo123!";
 	private static Connection connect;
@@ -82,9 +82,8 @@ public class TodoDao {
 	}
 	//SELECT title, name, sequence, type, regdateFROM todo ORDER BY sequence;
 	public static void insertTodo(Todo todo) {
-		
 		PreparedStatement ps = null;
-		String sql = "INSERT INTO todo (title, name, sqeunce) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO todo (title, name, sequence) VALUES (?, ?, ?)";
 		try {
 			connectDB();
 			ps = connect.prepareStatement(sql);
@@ -108,10 +107,51 @@ public class TodoDao {
 	
 	public static void upgradeType(Todo todo) {
 		//TODO -> DOING -> DONE
-		
+		PreparedStatement ps = null;
+		String sql = "UPDATE todo SET type = ? WHERE title = ?;";
+		try {
+			connectDB();
+			ps=connect.prepareStatement(sql);
+			ps.setString(2, todo.getTitle());
+			if(todo.getType().equals("TODO")) {
+				ps.setString(1, "DOING");
+			}else if(todo.getType().equals("DOING")) {
+				ps.setString(1, "DONE");
+			}
+			ps.executeUpdate();
+			disconnectDB();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(ps!=null) {
+				try {
+					ps.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
-	public static void selectTodo(Todo todo) {
-		
+	public static void deleteTodo(Todo todo) {
+		PreparedStatement ps = null;
+		String sql = "DELETE FROM todo WHERE title = ?;";
+		try {
+			connectDB();
+			ps=connect.prepareStatement(sql);
+			ps.setString(1, todo.getTitle());
+			ps.executeUpdate();
+			disconnectDB();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(ps!=null) {
+				try {
+					ps.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
