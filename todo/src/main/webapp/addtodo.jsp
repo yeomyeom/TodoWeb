@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>new todo registration</title>
+
 <script>
 function checkForm(){
 	if(document.addtodo.title.value.length > 24){

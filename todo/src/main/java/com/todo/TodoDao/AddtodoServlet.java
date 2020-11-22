@@ -35,7 +35,7 @@ public class AddtodoServlet extends HttpServlet {
 		int sequence = Integer.parseInt(request.getParameter("sequence"));
 		Todo todo = new Todo(title, name, sequence, "", "");
 		TodoDao.insertTodo(todo);
-		//response.sendRedirect("/todo/index");
+		response.sendRedirect("/todo/index");
 	}
 
 }

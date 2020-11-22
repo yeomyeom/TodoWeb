@@ -11,21 +11,12 @@ public class Todo {
 	
 	public Todo(String title, String name, int sequence, String type, String date) {
 		super();
-		//this.todoId = Id;
 		this.title = title;
 		this.name = name;
 		this.sequence = sequence;
 		this.type = type;
 		this.regdate = date;
 	}
-	/*
-	public Integer getTodoId() {
-		return todoId;
-	}
-	public void setTodoId(Integer todoId) {
-		this.todoId = todoId;
-	}
-	*/
 	public String getTitle() {
 		return title;
 	}

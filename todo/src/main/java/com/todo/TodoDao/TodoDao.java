@@ -40,15 +40,16 @@ public class TodoDao {
 	// 3. Todo 하나를 제거함 (뭐를 기준으로 제거를 해줘야하나)
 	// 4. Todo 하나의 type을 바꾸기
 	// 5. 로그인은 나중에 해보자
-	public static ArrayList<Todo> allTodoList(){
+	public static ArrayList<Todo> allTodoList(String types){
 		ArrayList<Todo> todoList = new ArrayList<Todo>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			connectDB();
 			String sql = "SELECT title, name, sequence, type, regdate "
-					+ "FROM todo ORDER BY sequence;";
+					+ "FROM todo WHERE type=? ORDER BY sequence;";
 			ps = connect.prepareStatement(sql);
+			ps.setString(1, types);
 			//ps.setInt(sql 물음표 몇번째, 넣을 숫자)
 			rs = ps.executeQuery();
 			while(rs.next()) {
@@ -113,9 +114,9 @@ public class TodoDao {
 			connectDB();
 			ps=connect.prepareStatement(sql);
 			ps.setString(2, todo.getTitle());
-			if(todo.getType().equals("TODO")) {
+			if("TODO".equals(todo.getType())) {
 				ps.setString(1, "DOING");
-			}else if(todo.getType().equals("DOING")) {
+			}else if("DOING".equals(todo.getType())) {
 				ps.setString(1, "DONE");
 			}
 			ps.executeUpdate();
